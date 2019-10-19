@@ -1,0 +1,15 @@
+{
+	"pluginName": "jenkins管理",
+	"description": "jenkins manager",
+	"main": "index.html",
+    "version": "0.0.1",
+    "author": "Sikemz",
+    "preload":"preload.js",
+	"features": [
+	    {
+			"code": "jk",
+			"explain": "jenkins manager",
+	        "cmds":["jk", "jkn"]
+	    }
+	]
+}
