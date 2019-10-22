@@ -1,0 +1,89 @@
+html {
+  height: 100%;
+  overflow-y: hidden;
+}
+.config {
+  padding: 10px 10px;
+}
+.config .label {
+  margin: 0 20px 20px 0;
+}
+.config .input {
+  font-size: 14px;
+  display: inline-block;
+  line-height: 40px;
+  height: 40px;
+  width: 100%;
+}
+.config .input input {
+  width: 180px;
+  border-radius: 4px;
+  border: 1px solid #DFE1E6;
+  box-sizing: border-box;
+  color: #333E4C;
+  height: 100%;
+  padding: 0 15px;
+  -webkit-transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  width: 100%;
+}
+.config .input input:focus {
+  outline: 0;
+  cursor: auto;
+  border-color: #34bc6e;
+}
+.config .btn {
+  margin: 20px auto;
+  cursor: pointer;
+  border: 1px solid #5dc98b;
+  background: #34bc6e;
+  color: white;
+  width: 100px;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 40px;
+}
+.config .btn:hover {
+  background: #5dc98b;
+}
+.list {
+  list-style: none;
+  padding: 0;
+}
+.list li {
+  line-height: 40px;
+  font-size: 16px;
+  padding: 0 20px;
+  color: #333E4C;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.list li:hover {
+  background: #f5f7f8;
+}
+.list li.selected {
+  background: #f5f7f8;
+  color: #3B85FF;
+}
+.list li .times {
+  color: green;
+  display: inline-block;
+  width: 50px;
+  font-style: italic;
+}
+.list li .c-tag {
+  border-radius: 50%;
+  display: inline-block;
+  height: 10px;
+  margin-right: 8px;
+  width: 10px;
+}
+.list li .c-tag.blue {
+  background: #448AFF;
+}
+.list li .c-tag.red {
+  background: #F45C50;
+}
+.list li .c-tag.green {
+  background: #34BC6E;
+}

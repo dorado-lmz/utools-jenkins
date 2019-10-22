@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "less": "lessc index.less index.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jenkins": "^0.27.0"
+    "jenkins": "^0.27.0",
+    "less": "^3.10.3",
+    "vue": "^2.6.10"
   }
 }

@@ -2,14 +2,19 @@
 	"pluginName": "jenkins管理",
 	"description": "jenkins manager",
 	"main": "index.html",
-    "version": "0.0.1",
-    "author": "Sikemz",
+    "version": "0.0.5",
+	"author": "Sikemz",
+	"logo": "icon.png",
     "preload":"preload.js",
 	"features": [
 	    {
 			"code": "jk",
 			"explain": "jenkins manager",
-	        "cmds":["jk", "jkn"]
+	        "cmds":["jk", "jkn", {
+				"type": "regex",
+				"label": "deploy",
+				"match": "/jk\\s\\w/i"
+			}]
 	    }
 	]
 }
