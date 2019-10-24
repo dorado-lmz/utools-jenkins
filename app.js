@@ -28,6 +28,8 @@ Vue.component('app', {
             this.initJenkins();
         }
         utools.onPluginEnter(({code, type, payload}) => {
+            let val = utools.db.get('url');
+            this.url = val && val.data || '';
             let args = payload.split(' ')[1] || '';
             this.initJenkins(args);
         })
@@ -66,7 +68,16 @@ Vue.component('app', {
                     this.jobs = jobs.filter((job) => ~job.name.indexOf(text)).sort((a,b) => (b.time || 0) - (a.time|| 0));
                 }, '请输入jenkins任务名');
                 if (args) {
-                    utools.setSubInputValue(args);
+                    if (args === 'clear') {
+                        clear();
+                        utools.showNotification('缓存已清除');
+                    } else if (args === 'config') {
+                        this.value = this.url;
+                        this.url = '';
+                    }else {
+                        utools.setSubInputValue(args);
+                    }
+
                 }
             })
 
@@ -83,18 +94,24 @@ Vue.component('app', {
                         this.build(this.jobs[this.selectedLi]);
                         break;
                     case 38: //上
+                        e.preventDefault();
                         if (this.selectedLi > 0) {
                             this.selectedLi--;
                             document.documentElement.scrollTop = this.$refs.li[this.selectedLi].offsetTop;
                         }
                         break;
                     case 40:  //下
+                        e.preventDefault();
                         if (this.selectedLi < this.$refs.li.length-1) {
                             this.selectedLi++;
                             document.documentElement.scrollTop = this.$refs.li[this.selectedLi].offsetTop;
                         }
                         break;
                 }
+            });
+
+            $(document).scroll((e) => {
+
             });
         }
     }

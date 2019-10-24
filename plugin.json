@@ -10,11 +10,34 @@
 	    {
 			"code": "jk",
 			"explain": "jenkins manager",
-	        "cmds":["jk", "jkn", {
+	        "cmds":["jk", "jkn"]
+		},
+		{
+			"code": "clear",
+			"explain": "jenkins 清除缓存",
+	        "cmds":[{
+				"type": "regex",
+				"label": "clear",
+				"match": "/jk\\sclear/i"
+			}]
+		},
+		{
+			"code": "config",
+			"explain": "jenkins 配置",
+	        "cmds":[{
+				"type": "regex",
+				"label": "config",
+				"match": "/jk\\sconfig/i"
+			}]
+		},
+		{
+			"code": "deploy",
+			"explain": "jenkins 部署任务",
+	        "cmds":[{
 				"type": "regex",
 				"label": "deploy",
 				"match": "/jk\\s\\w/i"
 			}]
-	    }
+		}
 	]
 }

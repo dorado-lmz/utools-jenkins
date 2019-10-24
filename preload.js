@@ -31,6 +31,10 @@ window.buildJob = function(input) {
     return jenkins.job.build(input);
 }
 
+window.clear = function() {
+    _jobs = null;
+}
+
 window.addQueue = function(job, id) {
     let _runingJob = {
         timestamp: Date.now(),
