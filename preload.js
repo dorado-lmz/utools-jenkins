@@ -1,8 +1,16 @@
 const fs = require('fs');
+const browser = require('openurl');
+const Sort = require('./sort');
 
 var jenkins;
 const _job_top10 = [];
-const _jobRuningQueue = [];
+const _jobRuningQueue = [
+    () => {
+        if (_jobs.length) {
+            _jobs = Sort.resort(_jobs);
+        }
+    }
+];
 var _jobs;
 
 window.createJenkins = (url) => {
@@ -33,6 +41,32 @@ window.buildJob = function(input) {
 
 window.clear = function() {
     _jobs = null;
+}
+
+window.startTimerTask = function() {
+    _jobRuningQueue.handler = setInterval(() => {
+        _jobRuningQueue.forEach((item) => {
+            item.apply(null);
+        });
+    }, 1000 * 10 * 60);
+}
+
+window.stopTimerTask = function() {
+    if (_jobRuningQueue.handler) {
+        clearInterval(_jobRuningQueue.handler);
+    }
+}
+
+
+window.openBrowser = function(url) {
+    browser.open(url);
+}
+
+window.removeJob = function(job) {
+    let index = _jobs.indexOf(job);
+    if (~index) {
+        _jobs.splice(index, 1);
+    }
 }
 
 window.addQueue = function(job, id) {

@@ -12,6 +12,7 @@
   "dependencies": {
     "jenkins": "^0.27.0",
     "less": "^3.10.3",
+    "openurl": "^1.1.1",
     "vue": "^2.6.10"
   }
 }

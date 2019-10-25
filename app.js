@@ -19,6 +19,12 @@ Vue.component('app', {
         <li @click="build(job)" ref="li" v-for="(job, index) of jobs" :class="{selected: selectedLi == index}">
         <span v-if="job.color" class="c-tag" :class="job.color"></span>
         <span class="times" v-if="job.time">{{job.time}}</span>
+        <div class="op">
+            <span class="iconfont" v-if="job.url" @click.stop="go(job.url)">&#xe652;</span>
+            <span class="iconfont" @click.stop="(e) => fav(job, e)">&#xe61a;</span>
+            <span class="iconfont" @click.stop="stop(job)">&#xe671;</span>
+            <span class="iconfont" @click.stop="remove(job)">&#xe699;</span>
+        </div>
         {{job.name}}</li>
     </ul>`,
 
@@ -33,12 +39,36 @@ Vue.component('app', {
             let args = payload.split(' ')[1] || '';
             this.initJenkins(args);
         })
+        utools.onPluginReady(() => {
+            startTimerTask();
+        });
+        utools.onPluginDetach(() => {
+            stopTimerTask();
+        });
         utools.onPluginOut(() => {
             utools.removeSubInput();
         })
     },
 
     methods: {
+        go(url) {
+            openBrowser(url);
+        },
+        remove(job) {
+            removeJob(job);
+            utools.showNotification(`${job.name} 删除成功` );
+        },
+        stop(job) {
+
+        },
+        fav(job, e) {
+            let target = e.target;
+            if (target) {
+                target.setAttribute('style', `color: ${job.fav ? 'auto' : 'red'}`)
+                job.fav = !job.fav;
+            }
+
+        },
         save() {
             if (!this.value){
                 return;
@@ -65,7 +95,7 @@ Vue.component('app', {
                     if (!text) {
                         return jobs;
                     }
-                    this.jobs = jobs.filter((job) => ~job.name.indexOf(text)).sort((a,b) => (b.time || 0) - (a.time|| 0));
+                    this.jobs = jobs.filter((job) => ~job.name.indexOf(text));
                 }, '请输入jenkins任务名');
                 if (args) {
                     if (args === 'clear') {
@@ -97,14 +127,20 @@ Vue.component('app', {
                         e.preventDefault();
                         if (this.selectedLi > 0) {
                             this.selectedLi--;
-                            document.documentElement.scrollTop = this.$refs.li[this.selectedLi].offsetTop;
+                            let offsetTop = this.$refs.li[this.selectedLi].offsetTop;
+                            if (offsetTop > 160) {
+                                document.documentElement.scrollTop = offsetTop - 160;
+                            }
                         }
                         break;
                     case 40:  //下
                         e.preventDefault();
                         if (this.selectedLi < this.$refs.li.length-1) {
                             this.selectedLi++;
-                            document.documentElement.scrollTop = this.$refs.li[this.selectedLi].offsetTop;
+                            let offsetTop = this.$refs.li[this.selectedLi].offsetTop;
+                            if (offsetTop > 160) {
+                                document.documentElement.scrollTop = offsetTop - 160;
+                            }
                         }
                         break;
                 }

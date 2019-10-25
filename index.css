@@ -1,3 +1,14 @@
+@font-face {
+  font-family: 'iconfont';
+  src: url('./asset/iconfont.woff') format('woff');
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 .config {
   padding: 10px 10px;
 }
@@ -54,12 +65,11 @@
   border-radius: 4px;
   cursor: pointer;
 }
-.list li:hover {
-  background: #f5f7f8;
-}
 .list li.selected {
   background: #f5f7f8;
   color: #3B85FF;
+  font-size: 18px;
+  text-transform: capitalize;
 }
 .list li .times {
   color: green;
@@ -82,4 +92,17 @@
 }
 .list li .c-tag.green {
   background: #34BC6E;
+}
+.list li .op {
+  float: right;
+  margin-right: 10px;
+  font-size: 14px;
+  height: 40px;
+}
+.list li .op .iconfont {
+  padding: 0 5px;
+}
+.list li .op .iconfont:hover {
+  color: #34BC6E;
+  font-size: 22px;
 }
