@@ -5,8 +5,15 @@ Vue.component('app', {
             url: val && val.data || '',
             value: '',
             jobs: [],
-            selectedLi: 0
+            selectedLi: 0,
+            op: -1
         };
+    },
+
+    computed: {
+        oplist() {
+            return ['url', 'fav', 'stop', 'rm'];
+        }
     },
 
     template: `<div class="config" v-if="!url">
@@ -20,10 +27,10 @@ Vue.component('app', {
         <span v-if="job.color" class="c-tag" :class="job.color"></span>
         <span class="times" v-if="job.time">{{job.time}}</span>
         <div class="op">
-            <span class="iconfont" v-if="job.url" @click.stop="go(job.url)">&#xe652;</span>
-            <span class="iconfont" @click.stop="(e) => fav(job, e)">&#xe61a;</span>
-            <span class="iconfont" @click.stop="stop(job)">&#xe671;</span>
-            <span class="iconfont" @click.stop="remove(job)">&#xe699;</span>
+            <span class="iconfont" :class="{selected: selectedLi == index && op === 0}" v-if="job.url" @click.stop="go(job.url)">&#xe652;</span>
+            <span class="iconfont" :class="{selected: selectedLi == index && op === 1}" @click.stop="(e) => fav(job, e)">&#xe61a;</span>
+            <span class="iconfont" :class="{selected: selectedLi == index && op === 2}" @click.stop="stop(job)">&#xe671;</span>
+            <span class="iconfont" :class="{selected: selectedLi == index && op === 3}" @click.stop="remove(job)">&#xe699;</span>
         </div>
         {{job.name}}</li>
     </ul>`,
@@ -92,6 +99,7 @@ Vue.component('app', {
                 this.jobs = jobs;
                 utools.setSubInput(({text}) => {
                     this.selectedLi = 0;
+                    this.op = -1;
                     if (!text) {
                         return jobs;
                     }
@@ -121,7 +129,30 @@ Vue.component('app', {
                 }
                 switch(e.keyCode){
                     case 13:
-                        this.build(this.jobs[this.selectedLi]);
+                        let job = this.jobs[this.selectedLi];
+                        switch(this.op) {
+                            case -1:
+                                this.build(job);
+                                break;
+                            case 0:
+                                this.go(job.url);
+                                break;
+                            case 1:
+                                this.fav(job);
+                                break;
+                            case 2:
+                                this.stop(job);
+                                break;
+                            case 3:
+                                this.go(job.url);
+                                break;
+                        }
+                        break;
+                    case 37:
+                        e.preventDefault();
+                        if (this.op > -1) {
+                            this.op--;
+                        }
                         break;
                     case 38: //上
                         e.preventDefault();
@@ -133,6 +164,12 @@ Vue.component('app', {
                             }
                         }
                         break;
+                    case 39:
+                            e.preventDefault();
+                            if (this.op < this.oplist.length - 1) {
+                                this.op++;
+                            }
+                            break;
                     case 40:  //下
                         e.preventDefault();
                         if (this.selectedLi < this.$refs.li.length-1) {

@@ -106,3 +106,7 @@
   color: #34BC6E;
   font-size: 22px;
 }
+.list li .op .iconfont.selected {
+  color: #34BC6E;
+  font-size: 22px;
+}
